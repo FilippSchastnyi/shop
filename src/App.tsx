@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react'
+import {useQuery} from 'react-query'
+/*Components*/
+import Drawer from '@mui/material/Drawer'
+import LinearProgress from '@mui/material/LinearProgress'
+import Grid from '@mui/material/Grid'
+import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
+import Badge from '@mui/icons-material/Badge'
+/*Styles*/
+import {Wrapper} from './App.styles'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const getProducts = async () =>{
+    await (await fetch('https://fakestoreapi.com/products'))
+}
+
+const App = () => {
+    return (
+        <div className="App">
+            work
+        </div>
+    );
 }
 
 export default App;
