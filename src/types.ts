@@ -1,4 +1,4 @@
-export interface ICartItem  {
+export interface ICardItem  {
     id: number;
     category: string;
     description: string;
