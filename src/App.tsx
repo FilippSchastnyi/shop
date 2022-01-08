@@ -26,7 +26,9 @@ const App = () => {
         'products',
         getProducts)
 
-    const getTotalItems = (items:ICardItem[]) => null
+    const getTotalItems = (items: ICardItem[]) =>
+        items.reduce((acc: number, item) => acc + item.amount, 0);
+
     const handleAddToCard = (clickedItems: ICardItem) => null
     const handleRemoveFromCard = () => null
 
@@ -35,11 +37,11 @@ const App = () => {
 
     return (
         <C.Wrapper>
-            <Drawer anchor='right' open={isCardOpen} onClose={()=>setIsCardOpen(false)}>
+            <Drawer anchor='right' open={isCardOpen} onClose={() => setIsCardOpen(false)}>
                 Card goes here
             </Drawer>
-            <C.IcoButton onClick={()=> setIsCardOpen(true)}>
-                <Badge badgeContent={getTotalItems(cardItems)}      color='error'>
+            <C.IcoButton onClick={() => setIsCardOpen(true)}>
+                <Badge badgeContent={getTotalItems(cardItems)} color='error'>
                     <AddShoppingCart/>
                 </Badge>
             </C.IcoButton>
