@@ -30,8 +30,27 @@ const App = () => {
     const getTotalItems = (items: ICardItem[]) =>
         items.reduce((acc: number, item) => acc + item.amount, 0);
 
-    const handleAddToCard = (clickedItems: ICardItem) => null
-    const handleRemoveFromCard = () => null
+    const handleAddToCard = (item: ICardItem) => {
+        const isItemInBucket = cardItems.find(i => i.id === item.id)
+        if (isItemInBucket) {
+            setCardItems(cardItems.map(i =>
+                i.id === item.id
+                    ? {...i, amount: i.amount + 1}
+                    : i
+            ))
+        } else setCardItems([...cardItems, {...item, amount: 1}])
+    }
+
+    const handleRemoveFromCard = (id: number) => {
+        setCardItems(
+            cardItems.reduce((acc, item) => {
+                if (item.id === id) {
+                    if (item.amount === 1) return acc;
+                    return [...acc, {...item, amount: item.amount - 1}];
+                } else return [...acc, item]
+            }, [] as ICardItem[])
+        )
+    }
 
     if (isLoading) return <LinearProgress/>
     if (error) return <div>Something went wrong ...</div>
