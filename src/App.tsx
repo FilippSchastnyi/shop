@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
 import Badge from '@mui/material/Badge'
 import StoreCard from './components/StoreCard/StoreCard'
+import Flyout from './components/Flyout/Flyout'
 /*Styles*/
 import * as C from './App.styles'
 /*Types*/
@@ -38,7 +39,11 @@ const App = () => {
     return (
         <C.Wrapper>
             <Drawer anchor='right' open={isCardOpen} onClose={() => setIsCardOpen(false)}>
-                Card goes here
+                <Flyout
+                    flyoutOptions={cardItems}
+                    addAnOptionToFlyout={handleAddToCard}
+                    removeAnOptionFromFlyout={handleRemoveFromCard}
+                />
             </Drawer>
             <C.IcoButton onClick={() => setIsCardOpen(true)}>
                 <Badge badgeContent={getTotalItems(cardItems)} color='error'>
