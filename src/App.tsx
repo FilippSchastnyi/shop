@@ -3,14 +3,15 @@ import Drawer from '@mui/material/Drawer'
 import {LinearProgress} from "@mui/material";
 import Grid from '@mui/material/Grid'
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
-import Badge from '@mui/icons-material/Badge'
+import Badge from '@mui/material/Badge'
 import StoreCard from './components/StoreCard/StoreCard'
 /*Styles*/
-import {Wrapper} from './App.styles'
+import * as C from './App.styles'
 /*Types*/
 import {ICardItem} from './types'
 /*Hooks*/
 import {useQuery} from "react-query";
+import {useState} from "react"
 
 
 const getProducts = async (): Promise<ICardItem[]> => {
@@ -19,11 +20,15 @@ const getProducts = async (): Promise<ICardItem[]> => {
 }
 
 const App = () => {
+    const [isCardOpen, setIsCardOpen] = useState<boolean>(false)
+    const [cardItems, setCardItems] = useState<ICardItem[]>([])
     const {data, isLoading, error} = useQuery<ICardItem[]>(
         'products',
         getProducts)
 
-    const getTotalItems = () => null
+    const getTotalItems = (items: ICardItem[]) =>
+        items.reduce((acc: number, item) => acc + item.amount, 0);
+
     const handleAddToCard = (clickedItems: ICardItem) => null
     const handleRemoveFromCard = () => null
 
@@ -31,7 +36,15 @@ const App = () => {
     if (error) return <div>Something went wrong ...</div>
 
     return (
-        <Wrapper>
+        <C.Wrapper>
+            <Drawer anchor='right' open={isCardOpen} onClose={() => setIsCardOpen(false)}>
+                Card goes here
+            </Drawer>
+            <C.IcoButton onClick={() => setIsCardOpen(true)}>
+                <Badge badgeContent={getTotalItems(cardItems)} color='error'>
+                    <AddShoppingCart/>
+                </Badge>
+            </C.IcoButton>
             <Grid container spacing={3}>
                 {data?.map((cardItem) => (
                     <Grid item
@@ -43,7 +56,7 @@ const App = () => {
                     </Grid>
                 ))}
             </Grid>
-        </Wrapper>
+        </C.Wrapper>
     );
 }
 
